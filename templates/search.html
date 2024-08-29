@@ -1,0 +1,122 @@
+{% extends "layout.html" %} {% block title %} Search results {% endblock %} {%
+block content %}
+<h1 class="text-align-left search-h1 sec-text-linear-gradient">
+  Search results
+</h1>
+
+{% set has_album_results = results | selectattr('type', 'equalto', 'album') |
+list | length > 0 %} {% set has_artist_results = results | selectattr('type',
+'equalto', 'artist') | list | length > 0 %} {% set has_track_results = results |
+selectattr('type', 'equalto', 'track') | list | length > 0 %}
+
+<div class="search-container-sections">
+  <!-- Sezione per Album -->
+  <div
+    class="search-album-section {% if category and category != 'album' %}visually-hidden{% endif %}"
+  >
+    <h2 class="text-align-left">Albums</h2>
+
+    {% if has_album_results %} {% for item in results if item.type == 'album' %}
+    <div class="search-album-row">
+      <div>
+        <a href="{{ url_for('album_details', album_id=item.id) }}">
+          <img src="{{ item.cover_image }}" alt="" style="max-width: 100px" />
+        </a>
+      </div>
+      <div>
+        <p>
+          <a href="{{ url_for('show_artist', artist_id=item.artist_id) }}">
+            {{ item.artist_name }}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p>
+          <a href="{{ url_for('album_details', album_id=item.id) }}">
+            {{ item.name }}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p class="strong-fw">{{ item.release_date }}</p>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <p>No albums found.</p>
+    {% endif %}
+  </div>
+
+  <!-- Sezione per Artisti -->
+  <div
+    class="search-artist-section {% if category and category != 'artist' %}visually-hidden{% endif %}"
+  >
+    <h2 class="text-align-left">Artists</h2>
+
+    {% if has_artist_results %} {% for item in results if item.type == 'artist'
+    %}
+    <div class="search-artist-row">
+      <div>
+        <a href="{{ url_for('show_artist', artist_id=item.id) }}">
+          <img src="{{ item.artist_image }}" alt="" style="max-width: 100px" />
+        </a>
+      </div>
+      <div>
+        <p>
+          <a href="{{ url_for('show_artist', artist_id=item.id) }}">
+            {{ item.name }}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p class="capitalize">{{ item.genres | join(', ') }}</p>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <p>No artists found.</p>
+    {% endif %}
+  </div>
+
+  <!-- Sezione per Tracce -->
+
+  <div
+    class="search-track-section {% if category and category != 'track' %}visually-hidden{% endif %}"
+  >
+    <h2 class="text-align-left">Tracks</h2>
+
+    {% if has_track_results %} {% for item in results if item.type == 'track' %}
+    <div class="search-track-row">
+      <div>
+        <a href="{{ url_for('album_details', album_id=item.album_id) }}">
+          <img src="{{ item.album_image }}" alt="" style="max-width: 100px" />
+        </a>
+      </div>
+      <div>
+        <p class="strong-fw">{{ item.name }}</p>
+      </div>
+      <div>
+        <p class="strong-fw">{{ item.duration }}</p>
+      </div>
+      <div>
+        <p>
+          <a href="{{ url_for('album_details', album_id=item.album_id) }}">
+            {{ item.album_name }}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p>
+          <a href="{{ url_for('show_artist', artist_id=item.artist_id) }}">
+            {{ item.artist_name }}
+          </a>
+        </p>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <p>No tracks found.</p>
+    {% endif %}
+  </div>
+</div>
+{% if not has_album_results and not has_artist_results and not has_track_results
+%}
+<p>No results found.</p>
+{% endif %} {% endblock %}

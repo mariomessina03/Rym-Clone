@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block content %}
+
+<div class="home-intro">
+    <div class="home-intro-left">
+        <img src="/static/def_rym_logo-removebg-preview.png" alt="logo">
+    </div>
+    <div class="home-intro-right">
+        <h1 class="text-align-left home-intro-h1">Welcome to <span class="main-text-linear-gradient">Rate Your Music</span></h2>
+        <p class="text-align-left home-intro-p">RYM is one of the largest music databases and communities online, which you can use in endless ways to discover new music. </p>
+    </div>
+</div>
+
+
+<h2 class="text-align-left sec-text-linear-gradient">Premium Reviews</h2>
+<div class="review-list">
+    {% for review in reviews %}
+    <div class="review-item">
+        <div class="review-item-left text-align-left">
+            <a href="{{ url_for('album_details', album_id=review.album_id) }}">
+                <img src="{{ review.album_cover }}" alt="Album Cover" class="album-cover">
+            </a>
+            <p class="r-i-l-p">Average Rating: <span class="accent-text-color">{{ review.average_rating | round(2) }}</span></p>
+            <p>Genres</p>
+            <ul role="list">
+                {{ review.album_genres }}
+            </ul>
+        </div>
+        <div class="review-item-right text-align-left">
+            <p class="home-a-style"><a href="{{ url_for('album_details', album_id=review.album_id) }}">{{ review.album_name }}</a></p>
+            <p class="home-a-style"><a href="{{ url_for('show_artist', artist_id=review.artist_id) }}">{{ review.artist_name }}</a></p>
+            <p>Review by <span class="accent-text-color">{{ review.username }}</span></p>
+            <p>Rating: {{ review.rating }}</p>
+            <p class="strong-fw">{{ review.review_title }}</p>
+            <p class="home-rev-text">{{ review.review_text }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

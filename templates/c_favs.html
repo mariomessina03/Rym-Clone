@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block title %}Community Favs{% endblock %} {%
+block content %}
+<h1 class="text-align-left sec-text-linear-gradient c-favs-h1">
+  Community Favs
+</h1>
+<p class="text-align-left c-favs-p">
+  Here, you'll discover a lineup of the most-loved albums that our community
+  can't get enough of. From timeless classics to hidden gems, these are the
+  records that have been on repeat. Whether you're hunting for your next
+  favorite album or just curious about what everyone else is spinning, you're in
+  the right place. Dive in, press play, and enjoy the soundtrack of our
+  collective vibe!
+</p>
+<div class="sort-buttons">
+  <h2 class="text-align-left">Sort by</h2>
+  <button
+    onclick="location.href='?sort_by=rating'"
+    class="btn btn-primary c-favs-btn"
+  >
+    Rating
+  </button>
+  <button
+    onclick="location.href='?sort_by=popularity'"
+    class="btn btn-primary c-favs-btn"
+  >
+    Popularity
+  </button>
+</div>
+<div class="c-favs-container">
+  <div class="c-favs-header">
+    <div class="transparent-text">Album image</div>
+    <div class="transparent-text">Album name</div>
+    <div class="transparent-text">Album artist</div>
+    <div class="strong-fw">Vote Count</div>
+    <div class="strong-fw">Average Rating</div>
+  </div>
+  <div class="c-favs-body">
+    {% for album in album_details %}
+    <div class="c-favs-row">
+      <div class="c-favs-ai">
+        <a href="{{ url_for('album_details', album_id=album.album_id) }}">
+          <img src="{{ album.album_cover }}" alt="Cover" />
+        </a>
+      </div>
+      <p>
+        <a href="{{ url_for('album_details', album_id=album.album_id) }}">
+          {{ album.album_name }}
+        </a>
+      </p>
+      <p>
+        <a href="{{ url_for('show_artist', artist_id=album.artist_id) }}">
+          {{ album.artist_name }}
+        </a>
+      </p>
+      <p class="strong-fw">{{ album.vote_count }}</p>
+      <p class="strong-fw">{{ album.average_rating }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

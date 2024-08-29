@@ -1,0 +1,8 @@
+cs50
+Flask
+Flask-Session
+werkzeug
+requests
+python-dotenv
+beautifulsoup4
+lxml

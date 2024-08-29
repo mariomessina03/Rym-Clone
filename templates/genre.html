@@ -1,0 +1,102 @@
+{% extends "layout.html" %} {% block title %} {{ genre_name }} {% endblock %} {%
+block content %}
+<div class="container">
+  <h1 class="text-align-left sec-text-linear-gradient">
+    {{ genre_name | capitalize }}
+  </h1>
+  <p class="text-align-left">
+    Details about {{ genre_name | capitalize }} music.
+  </p>
+  <p class="text-align-left">
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat similique
+    maiores ea velit perspiciatis repellendus ipsam illum beatae, ad repellat
+    cumque, veritatis id nulla accusamus ipsa odio voluptate, eaque hic! Iste
+    doloribus reiciendis debitis accusamus iusto dolore animi! Dolor ad
+    architecto fugit eum asperiores nam ipsa ex ipsum, corporis sint beatae
+    dignissimos impedit quae explicabo, quidem harum corrupti dolorum unde.
+  </p>
+  <p>{{ description }}</p>
+
+  <div class="albums">
+    {% if albums %}
+    <h2 class="text-align-left sec-text-linear-gradient">Albums</h2>
+    <div class="row">
+      {% for album in albums %}
+      <div class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <a href="{{ url_for('album_details', album_id=album.album_id) }}">
+            <img
+              src="{{ album.cover_image }}"
+              class="card-img-top"
+              alt="{{ album.album_name }}"
+            />
+          </a>
+          <div class="card-body">
+            <p class="card-title text-align-left genre-a-style">
+              <a href="{{ url_for('album_details', album_id=album.album_id) }}"
+                >{{ album.album_name }}</a
+              >
+            </p>
+
+            <p class="card-text text-align-left genre-a-style">
+              <a href="{{ url_for('show_artist', artist_id=album.artist_id) }}"
+                >{{ album.artist_name }}</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No albums found.</p>
+    {% endif %}
+  </div>
+
+  <div class="playlists">
+    {% if playlists %}
+    <h2 class="text-align-left sec-text-linear-gradient">Playlists</h2>
+    <div class="row">
+      {% for playlist in playlists %}
+      <div class="col-md-3">
+        <div class="card mb-4 shadow-sm">
+          <!-- Link all'immagine della playlist -->
+          <a href="{{ url_for('playlist_details', playlist_id=playlist.id) }}">
+            <img
+              src="{{ playlist.cover_image }}"
+              class="card-img-top"
+              alt="{{ playlist.name }}"
+            />
+          </a>
+
+          <div class="card-body">
+            <!-- Link al nome della playlist -->
+
+            <p class="card-title text-align-left genre-a-style">
+              <a
+                href="{{ url_for('playlist_details', playlist_id=playlist.id) }}"
+              >
+                {{ playlist.name }}
+              </a>
+            </p>
+
+            <p class="card-text text-align-left">
+              Owner: {{ playlist.owner }}<br />
+              Tracks: {{ playlist.tracks_count }}<br />
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No playlists found.</p>
+    {% endif %}
+  </div>
+
+  <p class="genre-a-style sec-text-linear-gradient">
+    <a href="{{ url_for('show_genres') }}">Back to Genres</a>
+  </p>
+</div>
+
+{% endblock %}

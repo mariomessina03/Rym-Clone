@@ -1,0 +1,46 @@
+{% extends "layout.html" %} {% block title %} {{ artist_name }} {% endblock %}
+{% block content %}
+
+<div class="container artist-container">
+  <div class="artist-left">
+    {% if artist_image %}
+    <img src="{{ artist_image }}" alt="{{ artist_name }}" />
+    {% endif %}
+  </div>
+  <div class="artist-right">
+    <div>
+      <h1 class="sec-text-linear-gradient">{{ artist_name }}</h1>
+      <p><span class="ar-span">Birth Date</span>{{ birth_date }}</p>
+      <p><span class="ar-span">Death Date</span>{{ death_date }}</p>
+      <p><span class="ar-span">Genres</span>{{ artist_genres | join(', ') }}</p>
+      <p><span class="ar-span">Biography</span>{{ bio }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="artist-albums">
+  <h2 class="sec-text-linear-gradient text-align-left">Albums</h2>
+
+  {% for album in artist_albums %}
+  <div class="artist-album">
+    {% if album.images %}
+    <div class="artist-album-image">
+      <a href="{{ url_for('album_details', album_id=album.id) }}">
+        <img
+          src="{{ album.images.0.url }}"
+          alt="Cover of {{ album.name }}"
+          style="width: 80px; height: auto"
+        />
+      </a>
+    </div>
+    {% endif %}
+    <p>
+      <a href="{{ url_for('album_details', album_id=album.id) }}">
+        {{ album.name }}
+      </a>
+    </p>
+    <p>{{ album.release_date }}</p>
+    <p>Tracks: {{ album.total_tracks }}</p>
+  </div>
+  {% endfor %} {% endblock %}
+</div>

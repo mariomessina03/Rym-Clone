@@ -1,0 +1,56 @@
+{% extends "layout.html" %} {% block title %} {{ playlist.playlist_name }} {%
+endblock %} {% block content %}
+
+<div class="playlist-details">
+  <div class="playlist-details-left">
+    <div>
+      {% if playlist.cover_image %}
+      <img
+        src="{{ playlist.cover_image }}"
+        alt="{{ playlist.playlist_name }}"
+        class="playlist-cover-image"
+      />
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="playlist-details-right">
+    <h2>{{ playlist.playlist_name }}</h2>
+    <p>{{ playlist.description }}</p>
+  </div>
+</div>
+
+<div class="tracks">
+  {% for track in playlist.tracks %}
+  <div class="track">
+    {% if track.cover_image %}
+    <div>
+      <a href="{{ url_for('album_details', album_id=track.album_id) }}">
+        <img
+          src="{{ track.cover_image }}"
+          alt="{{ track.track_name }}"
+          width="64"
+          height="64"
+        />
+      </a>
+    </div>
+    {% endif %}
+    <p>{{ track.track_name }}</p>
+    <p>
+      <a href="{{ url_for('show_artist', artist_id=track.artist_id) }}">
+        {{ track.artist_name }}
+      </a>
+    </p>
+    <p>
+      <a href="{{ url_for('album_details', album_id=track.album_id) }}">
+        {{ track.album_name }}
+      </a>
+    </p>
+    <p>{{ track.duration }}</p>
+  </div>
+
+  {% endfor %}
+</div>
+
+<a href="{{ url_for('show_genres') }}" class="playlist-a">Back to Genres</a>
+{% endblock %}

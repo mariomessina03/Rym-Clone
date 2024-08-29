@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block title %}log in{% endblock %} {% block
+content %}
+<div class="not-even-columns-1">
+  <form action="/login" method="post" class="login-form">
+    <h1 class="login-h1">Log in</h1>
+    <p class="login-p">If you are already registered, then please log in.</p>
+    <div class="login-left">
+      <div class="login-style-p">
+        <p>Username</p>
+        <input
+          autocomplete="off"
+          autofocus
+          name="username"
+          placeholder="Username"
+          type="text"
+        />
+      </div>
+      <div class="login-style-p">
+        <p>Password</p>
+        <input name="password" placeholder="Password" type="password" />
+      </div>
+    </div>
+
+    <button class="login-button" type="submit">Log In</button>
+  </form>
+
+  <div class="login-right-container">
+    <div class="login-right">
+      <h1 class="login-h1">Don't have an account?</h1>
+      <p class="login-p">With a Rate Your Music account, you can:</p>
+      <ul role="list" class="login-ul">
+        <li>
+          <span class="login">rate, review, catalog, and tag</span> your music
+        </li>
+        <li>track your upcoming (and past) <span class="login">shows</span></li>
+        <li>
+          find new <span class="login">music and people</span> through
+          recommendations
+        </li>
+        <li>
+          create and publish <span class="login">lists</span> of your favorite
+          things
+        </li>
+        <li>
+          <span class="login">research</span> music, cross-referenced by label,
+          artist, location, and genre.
+        </li>
+        <li>
+          <span class="login">socialize</span> through forums and private
+          messaging
+        </li>
+        <li>
+          <span class="login">contribute</span> to an always-growing public
+          music database
+        </li>
+      </ul>
+      <a class="login-button" href="/signup" role="button">Sign up now!</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

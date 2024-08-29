@@ -1,0 +1,85 @@
+{% extends "layout.html" %} {% block title %}Music Genres{% endblock %} {% block
+content %}
+<div class="container genres-container">
+  <div class="inner-intro-genres">
+    <h1 class="text-align-left sec-text-linear-gradient">Music Genres</h1>
+    <h2 class="text-align-left">All Genres</h2>
+  </div>
+
+  {% for genre, info in genres.items() %}
+  <!-- Start a new row for each macrogenere -->
+  <div class="2-genres-container">
+    <!-- Adding margin-bottom for spacing -->
+    <div class="nd-genre">
+      <div class="nd-genre-left">
+        <div class="genre-images">
+          {% for image in info.images %}
+          <div id="parent">
+            {% if image.endswith("1.jpeg") %}
+            <div class="container-image-suf-1">
+              <img
+                src="{{ url_for('static', filename='album_imgs/' ~ image) }}"
+                alt="{{ genre }} image"
+                class="image-suffix-1"
+              />
+            </div>
+
+            {% elif image.endswith("2.jpeg") %}
+            <div class="container-image-suf-2">
+              <img
+                src="{{ url_for('static', filename='album_imgs/' ~ image) }}"
+                alt="{{ genre }} image"
+                class="image-suffix-2"
+              />
+            </div>
+
+            {% elif image.endswith("3.jpeg") %}
+            <div class="container-image-suf-3">
+              <img
+                src="{{ url_for('static', filename='album_imgs/' ~ image) }}"
+                alt="{{ genre }} image"
+                class="image-suffix-3"
+              />
+            </div>
+
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="nd-genre-right">
+        <h2 class="genre-title">
+          <a href="{{ url_for('show_genre', genre_name=genre) }}">
+            {{ genre | capitalize }}
+          </a>
+        </h2>
+        <p class="genre-description">{{ info.description }}</p>
+        <button
+          class="btn btn-primary genres-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Subgenres
+        </button>
+        <div class="collapse" id="collapseExample">
+          <ul class="subgenres-list">
+            {% for subgenre in info.subgenres %}
+            <li>
+              <a
+                class="dropdown-item"
+                href="{{ url_for('show_genre', genre_name=subgenre) }}"
+                >{{ subgenre | capitalize }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
